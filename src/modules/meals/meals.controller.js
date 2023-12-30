@@ -1,5 +1,4 @@
 import { catchAsync } from '../../common/errors/catchAsync.js';
-import { validateMeal, validatePartialMeal } from './meals.schema.js';
 import { MealService } from './meals.service.js';
 
 export const findAllMeals = catchAsync(async (req, res, next) => {
@@ -32,7 +31,7 @@ export const findOneMeal = catchAsync(async (req, res, next) => {
 export const updateMeal = catchAsync(async (req, res, next) => {
   const { meal } = req;
 
-  const { hasError, errorMessages, mealData } = validatePartialMeal(req.body);
+  const { hasError, errorMessages, mealData } = req.body;
 
   if (hasError) {
     return res.status(422).json({

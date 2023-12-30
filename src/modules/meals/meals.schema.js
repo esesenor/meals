@@ -10,19 +10,3 @@ const mealSchema = z.object({
   restaurantId: z.number(),
   status: z.enum(['available', 'disabled']),
 });
-
-export function validateCreateMeal(data) {
-  const result = mealSchema.safeParse(data);
-
-  const {
-    hasError,
-    errorMessages,
-    data: mealData,
-  } = extractValidationData(result);
-
-  return {
-    hasError,
-    errorMessages,
-    mealData,
-  };
-}

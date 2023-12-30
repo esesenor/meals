@@ -1,7 +1,7 @@
 import { catchAsync } from '../../common/errors/catchAsync.js';
 import { AppError } from './../../common/errors/appError.js';
-import { validateCreateRestaurant } from './restaurant.schema.js';
-import { RestaurantService } from './restaurant.service.js';
+import { validateCreateRestaurant } from './restaurants.schema.js';
+import { RestaurantService } from './restaurants.service.js';
 
 export const findAllRestaurant = catchAsync(async (req, res) => {
   const restaurant = await RestaurantService.findAll();
