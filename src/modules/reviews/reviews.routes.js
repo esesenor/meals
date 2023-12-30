@@ -5,8 +5,8 @@ import {
   findOneReview,
   scheduleReview,
   updateReview,
-} from './review.controller.js';
-import { validExistReview } from './review.middleware.js';
+} from './reviews.controller.js';
+import { validExistReview } from './reviews.middleware.js';
 
 export const router = express.Router();
 

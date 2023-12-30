@@ -5,8 +5,8 @@ import {
   findAllMeals,
   findOneMeal,
   updateMeal,
-} from './medic.controller.js';
-import { validExistMeal } from './medic.middleware.js';
+} from './meals.controller.js';
+import { validExistMeal } from './meals.middleware.js';
 
 export const router = express.Router();
 

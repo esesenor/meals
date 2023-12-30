@@ -5,8 +5,8 @@ import {
   findAllOrders,
   findOneOrder,
   updateOrder,
-} from './order.controller.js';
-import { validExistOrder } from './order.middleware.js';
+} from './orders.controller.js';
+import { validExistOrder } from './orders.middleware.js';
 
 export const router = express.Router();
 
