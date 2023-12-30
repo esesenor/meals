@@ -1,0 +1,47 @@
+import { catchAsync } from '../../common/errors/catchAsync.js';
+import { AppError } from './../../common/errors/appError.js';
+import { validateCreateRestaurant } from './restaurant.schema.js';
+import { RestaurantService } from './restaurant.service.js';
+
+export const findAllRestaurant = catchAsync(async (req, res) => {
+  const restaurant = await RestaurantService.findAll();
+
+  return res.status(200).json(restaurant);
+});
+
+export const createRestaurant = catchAsync(async (req, res) => {
+  const { hasError, errorMessages, Data } = validateCreateRestaurant(req.body);
+
+  if (hasError) {
+    return res.status(422).json({
+      status: 'error',
+      message: errorMessages,
+    });
+  }
+
+  const restaurant = await RestaurantService.create(Data);
+
+  return res.status(201).json(restaurant);
+});
+
+export const findOneRestaurant = catchAsync(async (req, res) => {
+  const { restaurant } = req;
+
+  return res.status(200).json(restaurant);
+});
+
+export const updateRestaurant = catchAsync(async (req, res) => {
+  const { restaurant } = req;
+
+  const restaurantUpdated = await RestaurantService.update(restaurant);
+
+  return res.status(200).json(restaurantUpdated);
+});
+
+export const deleteRestaurant = catchAsync(async (req, res) => {
+  const { restaurant } = req;
+
+  await RestaurantService.delete(restaurant);
+
+  return res.status(204).json(null);
+});
