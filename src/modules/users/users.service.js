@@ -23,7 +23,10 @@ export class UserService {
   }
 
   static async update(user, data) {
-    return await user.update(data);
+    return await user.update({
+      name:data.name,
+      email:data.email
+    });
   }
 
   static async delete(user) {
