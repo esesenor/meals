@@ -3,7 +3,7 @@ import { AppError } from './../../common/errors/appError.js';
 import { validateCreateOrder } from './orders.schema.js';
 import { OrderService } from './orders.service.js';
 
-export const findAllOrder = catchAsync(async (req, res) => {
+export const findAllOrders = catchAsync(async (req, res) => {
   const order = await OrderService.findAll();
 
   return res.status(200).json(order);
