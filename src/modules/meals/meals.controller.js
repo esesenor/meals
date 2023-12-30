@@ -1,6 +1,6 @@
 import { catchAsync } from '../../common/errors/catchAsync.js';
-import { validateMeal, validatePartialMeal } from './meal.schema.js';
-import { MealService } from './meal.service.js';
+import { validateMeal, validatePartialMeal } from './meals.schema.js';
+import { MealService } from './meals.service.js';
 
 export const findAllMeals = catchAsync(async (req, res, next) => {
   const meals = await MealService.findAll();

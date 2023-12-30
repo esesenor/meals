@@ -1,7 +1,7 @@
 import { catchAsync } from '../../common/errors/catchAsync.js';
 import { AppError } from './../../common/errors/appError.js';
-import { validateCreateOrder } from './order.schema.js';
-import { OrderService } from './order.service.js';
+import { validateCreateOrder } from './orders.schema.js';
+import { OrderService } from './orders.service.js';
 
 export const findAllOrder = catchAsync(async (req, res) => {
   const order = await OrderService.findAll();

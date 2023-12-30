@@ -1,5 +1,5 @@
 import User from './users.model.js';
-import Order from './order.model.js';
+import Order from '../orders/orders.model.js';
 
 export class UserService {
   static async findOne(id) {
