@@ -1,9 +1,9 @@
 import { catchAsync } from '../../common/errors/catchAsync.js';
 import { AppError } from '../../common/errors/appError.js';
-import { validateCreateReview } from './review.schema.js';
-import { RestaurantService } from './../restaurant/restaurant.service.js';
-import { UserService } from '../user/user.service.js';
-import { ReviewService } from './review.service.js';
+import { validateCreateReview } from '../reviews/reviews.schema.js';
+import { RestaurantService } from '../restaurants/restaurants.service.js';
+import { UserService } from '../users/users.service.js';
+import { ReviewService } from '../reviews/reviews.service.js';
 
 export const sequenceReview = catchAsync(async (req, res, next) => {
   const { hasError, errorMessages, reviewData } = validateCreateReview(

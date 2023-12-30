@@ -3,8 +3,8 @@ import { catchAsync } from '../../common/errors/catchAsync.js';
 import {
   verifyPassword,
   encryptedPassword,
-} from '../../config/plugins/encripted-password-plugin.js';
-import { generateJWT } from '../../config/plugins/generate-jwt-plugin.js';
+} from '../../config/plugins/encripted-password.plugin.js';
+import { generateJWT } from '../../config/plugins/generate-jwt.plugin.js';
 import {
   validateUser,
   validatePartialUser,
