@@ -38,7 +38,7 @@ export const sequenceReview = catchAsync(async (req, res, next) => {
     rating: reviewData.rating
   }
 
-  const reviewCreated = await ReviewService.create(reviewData);
+  const reviewCreated = await ReviewService.create(newDataReview);
 
   return res.status(201).json(reviewCreated);
 });
