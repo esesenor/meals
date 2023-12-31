@@ -26,8 +26,13 @@ export class UserService {
 
   static async update(user, data) {
     return await user.update({
+<<<<<<< HEAD
       name: data.name,
       email: data.email,
+=======
+      name:data.name,
+      email:data.email
+>>>>>>> b3826e584e0c7a6951d1cfb1b331bd80abb072a0
     });
   }
 
