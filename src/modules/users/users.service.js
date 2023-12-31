@@ -39,10 +39,11 @@ export class UserService {
     });
   }
 
-  static async findAllOrderUser() {
+  static async findAllOrderUser(id) {
     return await Order.findAll({
       where: {
         status: 'active',
+        userId: id
       },
       include: [
         {

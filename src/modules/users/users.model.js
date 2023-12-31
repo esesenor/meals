@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../../config/database/database.js';
+import { encryptedPassword } from '../../config/plugins/encripted-password.plugin.js';
 
 
 const User = sequelize.define(

@@ -6,7 +6,7 @@ const orderSchema = z.object({
   userId: z.number(),
   totalPrice: z.number(),
   quantity: z.number().min(1, { message: 'Quantity min is 1' }),
-  status: z.enum(['active', 'cancelled', 'completed']),
+  //status: z.enum(['active', 'cancelled', 'completed']),
 });
 
 export function validateCreateOrder(data) {

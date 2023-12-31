@@ -165,11 +165,12 @@ export const changePassword = catchAsync(async (req, res, next) => {
 });
 
 export const findAllOrderUser = catchAsync(async (req, res, next) => {
-  const { user } = req;
+  const { token } = req;
 
-  await UserService.findAllOrderUser();
+  const orden = await UserService.findAllOrderUser(token.id);
 
-  return res.status(204).json(null);
+  return res.status(204).json(orden);
+  //console.log(user)
 });
 
 export const findOneOrderUser = catchAsync(async (req, res, next) => {

@@ -14,7 +14,7 @@ const restaurantSchema = z.object({
     .number()
     .min(0, { message: 'Rating min is 0' })
     .max(10, { message: 'Rating max is 10' }),
-  status: z.enum(['available', 'disabled']),
+  // status: z.enum(['available', 'disabled']),
 });
 
 export function validateCreateRestaurant(data) {
