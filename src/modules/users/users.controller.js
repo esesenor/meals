@@ -13,6 +13,7 @@ import {
 } from './users.schema.js';
 import { UserService } from './users.service.js';
 import jwt from 'jsonwebtoken';
+import { envs } from '../../config/enviroments/enviroments.js';
 
 export const register = catchAsync(async (req, res, next) => {
   const { hasError, errorMessages, userData } = validateUser(req.body);
@@ -169,23 +170,17 @@ export const changePassword = catchAsync(async (req, res, next) => {
 export const findAllOrdersUser = catchAsync(async (req, res, next) => {
   const authorizationHeader = req.headers.authorization; //ver si esta el token autorizado
   const token = authorizationHeader.split(' ')[1]; //extraemos solo el token
-  console.log("Token del usuario:", token);
-  const decodedToken = jwt.verify(token, 'cmFua2lubWVhbHM'); //decodificamos el token con nuestra llave secreta
+  const decodedToken = jwt.verify(token, envs.SECRET_JWT_SEED);
   const userId = decodedToken.id; //sacamos el id del usuario del token decodeficado
-  console.log("ID del usuario:", userId);
   const allOrders = await UserService.findAllOrders(userId);
-  console.log("me vengo: ", allOrders)
-
   return res.status(202).json(allOrders);
 });
 
 export const findOneOrderUser = catchAsync(async (req, res, next) => {
   const authorizationHeader = req.headers.authorization; //ver si esta el token autorizado
   const token = authorizationHeader.split(' ')[1]; //extraemos solo el token
-  console.log("Token del usuario:", token);
-  const decodedToken = jwt.verify(token, 'cmFua2lubWVhbHM'); //decodificamos el token con nuestra llave secreta
+  const decodedToken = jwt.verify(token, envs.SECRET_JWT_SEED);
   const userId = decodedToken.id; //sacamos el id del usuario del token decodeficado
-  console.log("ID del usuario:", userId);
   const { id } = req.params
   const idOrder = id
   const orderDetail = await UserService.findOneOrderUser(userId, idOrder);
