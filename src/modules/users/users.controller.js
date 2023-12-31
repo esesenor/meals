@@ -94,7 +94,6 @@ export const findAllUser = catchAsync(async (req, res, next) => {
 
 export const findOneUser = catchAsync(async (req, res, next) => {
   const { user } = req;
-  console.log("soy req: ", req)
   return res.status(200).json({
     id: user.id,
     name: user.name,

@@ -13,6 +13,7 @@ export const router = express.Router();
 
 router.route('/').get(findAllRestaurant).post(createRestaurant);
 router.route('/reviews/:id').post(sequenceReview)
+router.route('/reviews/:id').patch(validExistRestaurant,)
 router
   .route('/:id')
   .get(validExistRestaurant, findOneRestaurant)
