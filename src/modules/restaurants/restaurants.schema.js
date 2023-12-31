@@ -13,7 +13,7 @@ const restaurantSchema = z.object({
   rating: z
     .number()
     .min(0, { message: 'Rating min is 0' })
-    .max(5, { message: 'Rating max is 5' }),
+    .max(10, { message: 'Rating max is 10' }),
 });
 
 export function validateCreateRestaurant(data) {
