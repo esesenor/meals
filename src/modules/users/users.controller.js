@@ -1,3 +1,4 @@
+import { INTEGER } from 'sequelize';
 import { AppError } from '../../common/errors/appError.js';
 import { catchAsync } from '../../common/errors/catchAsync.js';
 import {
@@ -98,7 +99,6 @@ export const findOneUser = catchAsync(async (req, res, next) => {
     surname: user.surname,
     email: user.email,
     role: user.role,
-    photo: user.photo,
   });
 });
 
@@ -164,19 +164,16 @@ export const changePassword = catchAsync(async (req, res, next) => {
   });
 });
 
-export const findAllOrderUser = catchAsync(async (req, res, next) => {
-  const { token } = req;
-
-  const orden = await UserService.findAllOrderUser(token.id);
-
-  return res.status(204).json(orden);
-  //console.log(user)
+export const findAllOrdersUser = catchAsync(async (req, res, next) => {
+  const { sessionUser } = req;
+  const allOrders = await UserService.findAllOrders(sessionUser.dataValues.id);
+  return res.status(202).json(allOrders);
 });
 
-export const findOneOrderUser = catchAsync(async (req, res, next) => {
-  const { user } = req;
+export const findOneOrderUser = catchAsync(async (id, req, res, next) => {
+  const { sessionUser } = req;
 
-  await UserService.findOneOrderUser(user.id);
+  await UserService.findOneOrderUser(id);
 
-  return res.status(204).json(null);
+  return res.status(204).json({ message: `order` });
 });

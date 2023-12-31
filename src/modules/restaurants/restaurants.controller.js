@@ -10,7 +10,9 @@ export const findAllRestaurant = catchAsync(async (req, res) => {
 });
 
 export const createRestaurant = catchAsync(async (req, res) => {
-  const { hasError, errorMessages, restaurantData } = validateCreateRestaurant(req.body);
+  const { hasError, errorMessages, restaurantData } = validateCreateRestaurant(
+    req.body
+  );
 
   if (hasError) {
     return res.status(422).json({
