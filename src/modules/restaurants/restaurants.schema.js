@@ -13,15 +13,27 @@ const restaurantSchema = z.object({
   rating: z
     .number()
     .min(0, { message: 'Rating min is 0' })
-    .max(10, { message: 'Rating max is 10' }),
-<<<<<<< HEAD
-  // status: z.enum(['available', 'disabled']),
-=======
->>>>>>> 7d6d9a9223c5ecce62a031a130c0beb83983c65d
+    .max(5, { message: 'Rating max is 5' }),
 });
 
 export function validateCreateRestaurant(data) {
   const result = restaurantSchema.safeParse(data);
+
+  const {
+    hasError,
+    errorMessages,
+    data: restaurantData,
+  } = extractValidationData(result);
+
+  return {
+    hasError,
+    errorMessages,
+    restaurantData,
+  };
+}
+
+export function validatePartialRestaurant(data) {
+  const result = restaurantSchema.partial().safeParse(data);
 
   const {
     hasError,

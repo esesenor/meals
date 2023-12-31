@@ -18,8 +18,8 @@ export class ReviewService {
     });
   }
 
-  static async create(data) {
-    return await Review.create(data);
+  static async create(reviewData) {
+    return await Review.create(reviewData);
   }
 
   static async update(data) {

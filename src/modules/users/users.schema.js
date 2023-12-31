@@ -15,11 +15,7 @@ const registerSchema = z.object({
     .min(8, { message: 'Password must be at least 8 characters' })
     .max(16, { message: 'Password is too long' }),
   role: z.enum(['normal', 'admin']),
-<<<<<<< HEAD
   //status: z.enum(['available', 'disabled']),
-=======
-  // status: z.enum(['available', 'disabled']),
->>>>>>> b3826e584e0c7a6951d1cfb1b331bd80abb072a0
 });
 
 const loginUserSchema = z.object({

@@ -1,6 +1,8 @@
 import { catchAsync } from '../../common/errors/catchAsync.js';
+import { validateCreateReview } from '../reviews/reviews.schema.js';
+import { ReviewService } from '../reviews/reviews.service.js';
 import { AppError } from './../../common/errors/appError.js';
-import { validateCreateRestaurant } from './restaurants.schema.js';
+import { validateCreateRestaurant, validatePartialRestaurant } from './restaurants.schema.js';
 import { RestaurantService } from './restaurants.service.js';
 
 export const findAllRestaurant = catchAsync(async (req, res) => {
@@ -32,18 +34,32 @@ export const findOneRestaurant = catchAsync(async (req, res) => {
   return res.status(200).json(restaurant);
 });
 
-export const updateRestaurant = catchAsync(async (req, res) => {
+export const updateRestaurant = catchAsync(async (req, res, next) => {
   const { restaurant } = req;
+  const { hasError, errorMessages, restaurantData } = validatePartialRestaurant(req.body)
+ 
+  if (hasError) {
+    return res.status(422).json({
+      status: 'error',
+      message: errorMessages,
+    });
+  }
 
-  const restaurantUpdated = await RestaurantService.update(restaurant);
+  await RestaurantService.update(restaurant,restaurantData);
 
-  return res.status(200).json(restaurantUpdated);
+  return res.status(200).json({
+    message: 'the Restaurant has been updated successfully!',
+  });
 });
 
-export const deleteRestaurant = catchAsync(async (req, res) => {
+export const deleteRestaurant = catchAsync(async (req, res, next) => {
   const { restaurant } = req;
 
   await RestaurantService.delete(restaurant);
 
   return res.status(204).json(null);
 });
+
+
+
+

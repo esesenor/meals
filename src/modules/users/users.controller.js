@@ -15,7 +15,7 @@ import { UserService } from './users.service.js';
 
 export const register = catchAsync(async (req, res, next) => {
   const { hasError, errorMessages, userData } = validateUser(req.body);
-
+   console.log("Esto es la req:\n",req.params)
   if (hasError) {
     return res.status(422).json({
       status: 'error',
@@ -92,7 +92,7 @@ export const findAllUser = catchAsync(async (req, res, next) => {
 
 export const findOneUser = catchAsync(async (req, res, next) => {
   const { user } = req;
-
+  console.log(req.params.id); // nos trae el id que se pasa como parametro por la
   return res.status(200).json({
     id: user.id,
     name: user.name,
