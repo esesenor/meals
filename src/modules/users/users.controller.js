@@ -17,7 +17,7 @@ import { envs } from '../../config/enviroments/enviroments.js';
 
 export const register = catchAsync(async (req, res, next) => {
   const { hasError, errorMessages, userData } = validateUser(req.body);
-
+   console.log("Esto es la req:\n",req.params)
   if (hasError) {
     return res.status(422).json({
       status: 'error',

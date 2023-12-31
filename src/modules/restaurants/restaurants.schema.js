@@ -31,3 +31,19 @@ export function validateCreateRestaurant(data) {
     restaurantData,
   };
 }
+
+export function validatePartialRestaurant(data) {
+  const result = restaurantSchema.partial().safeParse(data);
+
+  const {
+    hasError,
+    errorMessages,
+    data: restaurantData,
+  } = extractValidationData(result);
+
+  return {
+    hasError,
+    errorMessages,
+    restaurantData,
+  };
+}

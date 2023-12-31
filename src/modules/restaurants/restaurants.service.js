@@ -22,11 +22,14 @@ export class RestaurantService {
     return await Restaurant.create(data);
   }
 
-  static async update(data) {
-    return await Restaurant.update(data);
+  static async update(restaurant,data) {
+    return await restaurant.update({
+      name: data.name,
+      address: data.address
+    });
   }
 
   static async delete(restaurant) {
-    return await restaurant.update({ status: 'disable' });
+    return await restaurant.update({ status: 'disabled' });
   }
 }

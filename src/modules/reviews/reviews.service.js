@@ -18,8 +18,8 @@ export class ReviewService {
     });
   }
 
-  static async create(data) {
-    return await Review.create(data);
+  static async create(reviewData) {
+    return await Review.create(reviewData);
   }
 
   static async update(userId, restaurantId, reviewId, review, data) {
@@ -36,7 +36,13 @@ export class ReviewService {
       });
   }
 
-  static async delete(review) {
-    return await review.update({ status: 'disable' });
+  static async delete(restaurantId,reviewId) {
+    return await Review.update({ status: "disabled" },
+    {
+      where: {
+        id: reviewId,
+        restaurant_id: restaurantId
+      }
+    });
   }
 }
