@@ -1,4 +1,5 @@
 import { catchAsync } from '../../common/errors/catchAsync.js';
+import { validateCreateMeal } from './meals.schema.js';
 import { MealService } from './meals.service.js';
 
 export const findAllMeals = catchAsync(async (req, res, next) => {
@@ -8,7 +9,7 @@ export const findAllMeals = catchAsync(async (req, res, next) => {
 });
 
 export const createMeal = catchAsync(async (req, res, next) => {
-  const { hasError, errorMessages, mealData } = validateMeal(req.body);
+  const { hasError, errorMessages, mealData } = validateCreateMeal(req.body);
 
   if (hasError) {
     return res.status(422).json({
@@ -31,7 +32,7 @@ export const findOneMeal = catchAsync(async (req, res, next) => {
 export const updateMeal = catchAsync(async (req, res, next) => {
   const { meal } = req;
 
-  const { hasError, errorMessages, mealData } = req.body;
+  const { hasError, errorMessages, mealsData } = req.body;
 
   if (hasError) {
     return res.status(422).json({
@@ -40,7 +41,7 @@ export const updateMeal = catchAsync(async (req, res, next) => {
     });
   }
 
-  await MealService.update(meal, mealData);
+  await MealService.update(meal, mealsData);
 
   return res.status(200).json({
     message: 'the meal has been updated',

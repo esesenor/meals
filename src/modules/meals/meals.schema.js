@@ -8,5 +8,21 @@ const mealSchema = z.object({
   }),
   price: z.number().min(0, { message: 'price must be greater than zero' }),
   restaurantId: z.number(),
-  status: z.enum(['available', 'disabled']),
+  //status: z.enum(['available', 'disabled']),
 });
+
+export function validateCreateMeal(data) {
+  const result = mealSchema.safeParse(data);
+
+  const {
+    hasError,
+    errorMessages,
+    data: mealData,
+  } = extractValidationData(result);
+
+  return {
+    hasError,
+    errorMessages,
+    mealData,
+  };
+}

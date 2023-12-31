@@ -10,7 +10,7 @@ export const findAllOrders = catchAsync(async (req, res) => {
 });
 
 export const createOrder = catchAsync(async (req, res) => {
-  const { hasError, errorMessages, Data } = validateCreateOrder(req.body);
+  const { hasError, errorMessages, orderData } = validateCreateOrder(req.body);
 
   if (hasError) {
     return res.status(422).json({
@@ -19,7 +19,7 @@ export const createOrder = catchAsync(async (req, res) => {
     });
   }
 
-  const order = await OrderService.create(Data);
+  const order = await OrderService.create(orderData);
 
   return res.status(201).json(order);
 });

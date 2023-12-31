@@ -10,7 +10,9 @@ export const findAllRestaurant = catchAsync(async (req, res) => {
 });
 
 export const createRestaurant = catchAsync(async (req, res) => {
-  const { hasError, errorMessages, Data } = validateCreateRestaurant(req.body);
+  const { hasError, errorMessages, restaurantData } = validateCreateRestaurant(
+    req.body
+  );
 
   if (hasError) {
     return res.status(422).json({
@@ -19,7 +21,7 @@ export const createRestaurant = catchAsync(async (req, res) => {
     });
   }
 
-  const restaurant = await RestaurantService.create(Data);
+  const restaurant = await RestaurantService.create(restaurantData);
 
   return res.status(201).json(restaurant);
 });

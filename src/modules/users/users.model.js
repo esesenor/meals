@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../../config/database/database.js';
-
+import { encryptedPassword } from '../../config/plugins/encripted-password.plugin.js';
 
 const User = sequelize.define(
   'users',
@@ -17,7 +17,6 @@ const User = sequelize.define(
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
       unique: true,
     },
     password: {

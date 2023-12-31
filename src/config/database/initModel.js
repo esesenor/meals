@@ -6,17 +6,17 @@ import Meal from '../../modules/meals/meals.model.js';
 
 export const initModel = () => {
   User.hasMany(Review);
-  Review.belongsTo(User);
+  Review.belongsTo(User, { foreignKey: 'userId' });
 
   User.hasMany(Order);
-  Order.belongsTo(User);
+  Order.belongsTo(User, { foreignKey: 'userId' });
 
   Restaurant.hasMany(Meal);
-  Meal.belongsTo(Restaurant);
+  Meal.belongsTo(Restaurant, { foreignKey: 'restaurantId' });
 
   Restaurant.hasMany(Review);
-  Review.belongsTo(Restaurant);
+  Review.belongsTo(Restaurant, { foreignKey: 'restaurantId' });
 
-  Order.hasOne(Meal);
-  Meal.belongsTo(Order);
+  Meal.hasOne(Order);
+  Order.belongsTo(Meal, { foreignKey: 'mealId' });
 };
