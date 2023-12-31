@@ -30,3 +30,19 @@ export function validateCreateReview(data) {
     reviewData,
   };
 }
+
+export function validatePartialReview(data) {
+  const result = reviewSchema.partial().safeParse(data);
+
+  const {
+    hasError,
+    errorMessages,
+    data: reviewData,
+  } = extractValidationData(result);
+
+  return {
+    hasError,
+    errorMessages,
+    reviewData,
+  };
+}

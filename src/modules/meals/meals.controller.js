@@ -31,7 +31,7 @@ export const findOneMeal = catchAsync(async (req, res, next) => {
 
 export const updateMeal = catchAsync(async (req, res, next) => {
   const { meal } = req;
-  //console.log("soy meal: ", meals)
+  console.log("soy meal: ", meal)
   const { hasError, errorMessages, mealData } = validatePartialMeal(req.body);
 
   if (hasError) {
