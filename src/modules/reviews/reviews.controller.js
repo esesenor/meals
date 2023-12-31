@@ -43,12 +43,8 @@ export const sequenceReview = catchAsync(async (req, res, next) => {
   return res.status(201).json(reviewCreated);
 });
 
-
-
-
-
 export const findAllReviews = catchAsync(async (req, res, next) => {
-  const reviews = await ReviewService.findAllReview();
+  const reviews = await ReviewService.findAll();
 
   return res.status(200).json(reviews);
 });
@@ -70,9 +66,23 @@ export const updateReview = catchAsync(async (req, res, next) => {
 });
 
 export const deleteReview = catchAsync(async (req, res, next) => {
-  const { review } = req;
+  const { restaurantId,reviewId } = req.params;
+  console.log("id1:",restaurantId,"id2:",reviewId)
+  console.log("esto son los id",req.params);
 
-  await ReviewService.delete(review);
+  const [restaurant, review] = await Promise.all([
+    await RestaurantService.findOne(restaurantId),
+    await UserService.findOne(reviewId),
+  ]);
 
-  return res.status(204).json(null);
+  if(!restaurant){
+    return next(new AppError("no existe el restaurante",404))
+  }
+  if(!review){
+    return next(new AppError("no existe el review",404))
+  }
+
+  await ReviewService.delete(restaurantId,reviewId);                                                 
+
+  return res.status(204).json("correct delete");
 });

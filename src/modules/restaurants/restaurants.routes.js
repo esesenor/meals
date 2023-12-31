@@ -7,13 +7,14 @@ import {
   updateRestaurant,
 } from './restaurants.controller.js';
 import { validExistRestaurant } from './restaurants.middleware.js';
-import { sequenceReview } from '../reviews/reviews.controller.js';
+import { deleteReview, sequenceReview } from '../reviews/reviews.controller.js';
 
 export const router = express.Router();
 
 router.route('/').get(findAllRestaurant).post(createRestaurant);
 router.route('/reviews/:id').post(sequenceReview)
 router.route('/reviews/:id').patch(validExistRestaurant,)
+router.route('/reviews/:restaurantId/:reviewId').delete(deleteReview)
 router
   .route('/:id')
   .get(validExistRestaurant, findOneRestaurant)

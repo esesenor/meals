@@ -26,7 +26,13 @@ export class ReviewService {
     return await Review.update(data);
   }
 
-  static async delete(review) {
-    return await review.update({ status: 'disable' });
+  static async delete(restaurantId,reviewId) {
+    return await Review.update({ status: "disabled" },
+    {
+      where: {
+        id: reviewId,
+        restaurant_id: restaurantId
+      }
+    });
   }
 }
