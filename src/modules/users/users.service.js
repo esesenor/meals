@@ -70,10 +70,10 @@ export class UserService {
     });
   }
 
-  static async findOneOrderUser(id) {
+  static async findOneOrderUser(userId, idOrder) {
     return await Order.findOne({
       where: {
-        id: id,
+        id: idOrder,
         status: 'active',
       },
       attributes: ['id', 'totalPrice', 'quantity'],
@@ -81,6 +81,9 @@ export class UserService {
         {
           model: User,
           attributes: ['id', 'name', 'role'],
+          where: {
+            id: userId, // Filtrar el usuario por su ID
+          },
         },
       ],
     });

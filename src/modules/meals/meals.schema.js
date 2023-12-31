@@ -26,3 +26,20 @@ export function validateCreateMeal(data) {
     mealData,
   };
 }
+
+
+export function validatePartialMeal(data) {
+  const result = mealSchema.partial().safeParse(data);
+
+  const {
+    hasError,
+    errorMessages,
+    data: mealData,
+  } = extractValidationData(result);
+
+  return {
+    hasError,
+    errorMessages,
+    mealData,
+  };
+}

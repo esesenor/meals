@@ -1,4 +1,4 @@
-import { INTEGER } from 'sequelize';
+import { INTEGER, or } from 'sequelize';
 import { AppError } from '../../common/errors/appError.js';
 import { catchAsync } from '../../common/errors/catchAsync.js';
 import {
@@ -12,6 +12,7 @@ import {
   validateLogin,
 } from './users.schema.js';
 import { UserService } from './users.service.js';
+import jwt from 'jsonwebtoken';
 
 export const register = catchAsync(async (req, res, next) => {
   const { hasError, errorMessages, userData } = validateUser(req.body);
@@ -92,7 +93,7 @@ export const findAllUser = catchAsync(async (req, res, next) => {
 
 export const findOneUser = catchAsync(async (req, res, next) => {
   const { user } = req;
-
+  console.log("soy req: ", req)
   return res.status(200).json({
     id: user.id,
     name: user.name,
@@ -104,6 +105,7 @@ export const findOneUser = catchAsync(async (req, res, next) => {
 
 export const updateUser = catchAsync(async (req, res, next) => {
   const { user } = req;
+  console.log("soy user req: ", req)
   const { hasError, errorMessages, userData } = validatePartialUser(req.body);
 
   if (hasError) {
@@ -165,15 +167,27 @@ export const changePassword = catchAsync(async (req, res, next) => {
 });
 
 export const findAllOrdersUser = catchAsync(async (req, res, next) => {
-  const { sessionUser } = req;
-  const allOrders = await UserService.findAllOrders(sessionUser.dataValues.id);
+  const authorizationHeader = req.headers.authorization; //ver si esta el token autorizado
+  const token = authorizationHeader.split(' ')[1]; //extraemos solo el token
+  console.log("Token del usuario:", token);
+  const decodedToken = jwt.verify(token, 'cmFua2lubWVhbHM'); //decodificamos el token con nuestra llave secreta
+  const userId = decodedToken.id; //sacamos el id del usuario del token decodeficado
+  console.log("ID del usuario:", userId);
+  const allOrders = await UserService.findAllOrders(userId);
+  console.log("me vengo: ", allOrders)
+
   return res.status(202).json(allOrders);
 });
 
-export const findOneOrderUser = catchAsync(async (id, req, res, next) => {
-  const { sessionUser } = req;
-
-  await UserService.findOneOrderUser(id);
-
-  return res.status(204).json({ message: `order` });
+export const findOneOrderUser = catchAsync(async (req, res, next) => {
+  const authorizationHeader = req.headers.authorization; //ver si esta el token autorizado
+  const token = authorizationHeader.split(' ')[1]; //extraemos solo el token
+  console.log("Token del usuario:", token);
+  const decodedToken = jwt.verify(token, 'cmFua2lubWVhbHM'); //decodificamos el token con nuestra llave secreta
+  const userId = decodedToken.id; //sacamos el id del usuario del token decodeficado
+  console.log("ID del usuario:", userId);
+  const { id } = req.params
+  const idOrder = id
+  const orderDetail = await UserService.findOneOrderUser(userId, idOrder);
+  return res.status(202).json(orderDetail);
 });
