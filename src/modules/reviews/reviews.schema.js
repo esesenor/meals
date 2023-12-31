@@ -7,7 +7,7 @@ const reviewSchema = z.object({
     invalid_type_error: 'Comment must be a string',
     required_error: 'Comment is required',
   }),
-  restaurantId: z.number(),
+  //restaurantId: z.number(),
   rating: z
     .number()
     .min(0, { message: 'Rating min is 0' })

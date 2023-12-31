@@ -9,19 +9,15 @@ export const sequenceReview = catchAsync(async (req, res, next) => {
   const { hasError, errorMessages, reviewData } = validateCreateReview(
     req.body
   );
-
   if (hasError) {
     return res.status(422).json({
       status: 'error',
       message: errorMessages,
     });
   }
-
-  const [restaurant, user] = await Promise.all([
-    await RestaurantService.findOne(reviewData.restaurantId),
-    await UserService.findOne(reviewData.userId),
-  ]);
-
+  const { id } = req.params //id de restaurant
+  const restaurant = await RestaurantService.findOne(id)
+  const user = await UserService.findOne(reviewData.userId)
   if (!restaurant) {
     return next(
       new AppError(
@@ -30,14 +26,19 @@ export const sequenceReview = catchAsync(async (req, res, next) => {
       )
     );
   }
-
   if (!user) {
     return next(
       new AppError(`User with id: ${reviewData.userId} not found`, 404)
     );
   }
+  const newDataReview = {
+    userId: reviewData.userId,
+    comment: reviewData.comment,
+    restaurantId: id,
+    rating: reviewData.rating
+  }
 
-  const reviewCreated = await ReviewService.create(reviewData);
+  const reviewCreated = await ReviewService.create(newDataReview);
 
   return res.status(201).json(reviewCreated);
 });

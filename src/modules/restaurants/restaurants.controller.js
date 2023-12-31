@@ -28,7 +28,6 @@ export const createRestaurant = catchAsync(async (req, res) => {
 
 export const findOneRestaurant = catchAsync(async (req, res) => {
   const { restaurant } = req;
-
   return res.status(200).json(restaurant);
 });
 
