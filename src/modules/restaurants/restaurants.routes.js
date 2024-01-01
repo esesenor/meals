@@ -8,7 +8,7 @@ import {
 } from './restaurants.controller.js';
 import { validExistRestaurant } from './restaurants.middleware.js';
 import { sequenceReview, updateReview } from '../reviews/reviews.controller.js';
-//import { validExistReview } from '../reviews/reviews.middleware.js';
+import { validExistReview } from '../reviews/reviews.middleware.js';
 import { deleteReview } from '../reviews/reviews.controller.js';
 
 export const router = express.Router();
