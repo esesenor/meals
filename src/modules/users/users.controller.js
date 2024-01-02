@@ -17,7 +17,7 @@ import { envs } from '../../config/enviroments/enviroments.js';
 
 export const register = catchAsync(async (req, res, next) => {
   const { hasError, errorMessages, userData } = validateUser(req.body);
-   console.log("Esto es la req:\n",req.params)
+  console.log("Esto es la req:\n", req.params)
   if (hasError) {
     return res.status(422).json({
       status: 'error',
@@ -168,15 +168,21 @@ export const changePassword = catchAsync(async (req, res, next) => {
 });
 
 export const findAllOrdersUser = catchAsync(async (req, res, next) => {
-  const { sessionUser } = req;
-  const allOrders = await UserService.findAllOrders(sessionUser.dataValues.id);
+  const authorizationHeader = req.headers.authorization; //ver si esta el token autorizado
+  const token = authorizationHeader.split(' ')[1]; //extraemos solo el token
+  const decodedToken = jwt.verify(token, envs.SECRET_JWT_SEED);
+  const userId = decodedToken.id; //sacamos el id del usuario del token decodeficado
+  const allOrders = await UserService.findAllOrders(userId);
   return res.status(202).json(allOrders);
 });
 
-export const findOneOrderUser = catchAsync(async (id, req, res, next) => {
-  const { sessionUser } = req;
-
-  await UserService.findOneOrderUser(id);
-
-  return res.status(204).json({ message: `order` });
+export const findOneOrderUser = catchAsync(async (req, res, next) => {
+  const authorizationHeader = req.headers.authorization; //ver si esta el token autorizado
+  const token = authorizationHeader.split(' ')[1]; //extraemos solo el token
+  const decodedToken = jwt.verify(token, envs.SECRET_JWT_SEED);
+  const userId = decodedToken.id; //sacamos el id del usuario del token decodeficado
+  const { id } = req.params
+  const idOrder = id
+  const orderDetail = await UserService.findOneOrderUser(userId, idOrder);
+  return res.status(202).json(orderDetail);
 });

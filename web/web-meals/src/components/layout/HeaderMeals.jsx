@@ -1,22 +1,46 @@
-const HeaderPokeball = () => {
+const HeaderMeal = () => {
   return (
-    <header className="mb-10">
-      <div className=" bg-yellow-600 h-16">
-        <div className="h-full pl-4">
+    <div className="flex flex-col items-center bg-secondary-900 pb-5">
+      {/* Header */}
+      <div className="flex items-center justify-between w-full px-8 py-4 bg-orange-800">
+        {/* Logo */}
+        <div className="flex items-center">
           <img
-            className="h-[40px] xxs:h-full xxs:block w-auto relative z-10 translate-y-4"
-            src="../../../public/imgs/meals.png"
-            alt=""
+            src="/public/imgs/meals.png"
+            alt="Dapper Men's Logo"
+            className="w-8 h-8 mr-2"
           />
+          <h1 className="text-2xl font-bold text-gray-800 ">SuperMarket EyM</h1>
+        </div>
+        {/* Search Bar */}
+        {/* <div className="flex items-center">
+          <input
+            id="i_buscar"
+            type="text"
+            placeholder="Buscar"
+            className="py-2 px-4 mr-4 bg-secondary-900 text-secondary-400 outline-none rounded-lg"
+          />
+         
+        </div> */}
+        {/* Authentication Buttons */}
+        <div className="flex items-center">
+          <button
+            to="login"
+            className="bg-primary text-black uppercase font-bold text-sm py-2 px-4 rounded-lg hover:text-green-900 mx-4 transition-colors"
+          >
+            Iniciar Sesión
+          </button>
+          <button
+            to="register"
+            className="bg-primary text-black uppercase font-bold text-sm py-2 px-4 rounded-lg hover:text-blue-900 transition-colors"
+          >
+            Registrarse
+          </button>
         </div>
       </div>
-      <div className="bg-zinc-300 h-12 relative">
-        <div className="h-[70px] w-[70px] bg-white border-8 border-zinc-100 rounded-full absolute right-0 -translate-x-1/2 -translate-y-[20%] grid place-content-center">
-          <div className="w-9 h-9 rounded-full bg-yellow-600 border-none"></div>
-        </div>
-      </div>
-    </header>
+      
+    </div>
   );
 };
 
-export default HeaderPokeball;
+export default HeaderMeal;
