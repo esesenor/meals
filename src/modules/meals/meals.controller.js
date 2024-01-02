@@ -24,14 +24,14 @@ export const createMeal = catchAsync(async (req, res, next) => {
 });
 
 export const findOneMeal = catchAsync(async (req, res, next) => {
-  const { id } = req.params
-  const meal = await MealService.findOne(id)
+  const { id } = req.params;
+  const meal = await MealService.findOne(id);
   return res.status(200).json(meal);
 });
 
 export const updateMeal = catchAsync(async (req, res, next) => {
   const { meal } = req;
-  console.log("soy meal: ", meal)
+
   const { hasError, errorMessages, mealData } = validatePartialMeal(req.body);
 
   if (hasError) {
