@@ -16,7 +16,7 @@ export const router = express.Router();
 router.route('/').get(findAllRestaurant).post(createRestaurant);
 router.route('/reviews/:id').post(sequenceReview)
 router.route('/reviews/:restaurantId/:reviewId').patch(updateReview)
-router.route('/reviews/:id').patch(validExistRestaurant,)
+//router.route('/reviews/:id').patch(validExistRestaurant,)
 router.route('/reviews/:restaurantId/:reviewId').delete(deleteReview)
 router
   .route('/:id')
