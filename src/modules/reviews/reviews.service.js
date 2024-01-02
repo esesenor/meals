@@ -23,30 +23,26 @@ export class ReviewService {
   }
 
   static async update(userId, restaurantId, reviewId, review, data) {
-    return await review.update(
-      {
-        comment: data.comment,
-        rating: data.rating,
-      },
+    return await review.update({
+      comment: data.comment,
+      rating: data.rating
+    },
       {
         where: {
           id: reviewId,
           userId: userId,
           restaurantId: restaurantId,
-        },
-      }
-    );
+        }
+      });
   }
 
-  static async delete(restaurantId, reviewId) {
-    return await Review.update(
-      { status: 'disabled' },
-      {
-        where: {
-          id: reviewId,
-          restaurant_id: restaurantId,
-        },
+  static async delete(restaurantId,reviewId) {
+    return await Review.update({ status: "disabled" },
+    {
+      where: {
+        id: reviewId,
+        restaurant_id: restaurantId
       }
-    );
+    });
   }
 }

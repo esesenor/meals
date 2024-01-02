@@ -1,3 +1,4 @@
+import { INTEGER } from 'sequelize';
 import { AppError } from '../../common/errors/appError.js';
 import { catchAsync } from '../../common/errors/catchAsync.js';
 import {
@@ -11,10 +12,12 @@ import {
   validateLogin,
 } from './users.schema.js';
 import { UserService } from './users.service.js';
+import jwt from 'jsonwebtoken';
+import { envs } from '../../config/enviroments/enviroments.js';
 
 export const register = catchAsync(async (req, res, next) => {
   const { hasError, errorMessages, userData } = validateUser(req.body);
-
+   console.log("Esto es la req:\n",req.params)
   if (hasError) {
     return res.status(422).json({
       status: 'error',
@@ -92,11 +95,18 @@ export const findAllUser = catchAsync(async (req, res, next) => {
 export const findOneUser = catchAsync(async (req, res, next) => {
   const { user } = req;
 
-  return res.status(200).json(user);
+  return res.status(200).json({
+    id: user.id,
+    name: user.name,
+    surname: user.surname,
+    email: user.email,
+    role: user.role,
+  });
 });
 
 export const updateUser = catchAsync(async (req, res, next) => {
   const { user } = req;
+  console.log("soy user req: ", req)
   const { hasError, errorMessages, userData } = validatePartialUser(req.body);
 
   if (hasError) {
@@ -159,16 +169,14 @@ export const changePassword = catchAsync(async (req, res, next) => {
 
 export const findAllOrdersUser = catchAsync(async (req, res, next) => {
   const { sessionUser } = req;
-
   const allOrders = await UserService.findAllOrders(sessionUser.dataValues.id);
-
   return res.status(202).json(allOrders);
 });
 
-export const findOneOrderUser = catchAsync(async (req, res, next) => {
-  const { user } = req;
+export const findOneOrderUser = catchAsync(async (id, req, res, next) => {
+  const { sessionUser } = req;
 
-  const order = await UserService.findOneOrder(orderId);
+  await UserService.findOneOrderUser(id);
 
-  return res.status(202).json(order);
+  return res.status(204).json({ message: `order` });
 });

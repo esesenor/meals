@@ -27,7 +27,7 @@ export class UserService {
   static async update(user, data) {
     return await user.update({
       name: data.name,
-      email: data.email,
+      email: data.email
     });
   }
 
@@ -70,24 +70,20 @@ export class UserService {
     });
   }
 
-  static async findOneOrder(id) {
-    const order = await Order.findOne({
-      where: { id: id, status: 'active' },
+  static async findOneOrderUser(userId, idOrder) {
+    return await Order.findOne({
+      where: {
+        id: idOrder,
+        status: 'active',
+      },
       attributes: ['id', 'totalPrice', 'quantity'],
       include: [
         {
           model: User,
-          attributes: ['name', 'role'],
-        },
-        {
-          model: Meal,
-          attributes: ['name', 'price'],
-          include: [
-            {
-              model: Restaurant,
-              attributes: ['name', 'rating'],
-            },
-          ],
+          attributes: ['id', 'name', 'role'],
+          where: {
+            id: userId, // Filtrar el usuario por su ID
+          },
         },
       ],
     });
