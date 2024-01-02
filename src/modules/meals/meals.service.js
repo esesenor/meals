@@ -9,22 +9,6 @@ export class MealService {
     });
   }
 
-  static async findAllDisabled() {
-    return await Meal.findAll({
-      where: {
-        status: 'disabled',
-      },
-    });
-  }
-
-  static async findAllAvailable() {
-    return await Meal.findAll({
-      where: {
-        status: 'available',
-      },
-    });
-  }
-
   static async findAll() {
     return await Meal.findAll();
   }
@@ -33,8 +17,11 @@ export class MealService {
     return await Meal.create(data);
   }
 
-  static async update(data) {
-    return await Meal.update(data);
+  static async update(meal, data) {
+    return await meal.update({
+      name: data.name,
+      price: data.price,
+    });
   }
 
   static async delete(meal) {

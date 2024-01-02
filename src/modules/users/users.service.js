@@ -26,13 +26,8 @@ export class UserService {
 
   static async update(user, data) {
     return await user.update({
-<<<<<<< HEAD
       name: data.name,
       email: data.email,
-=======
-      name:data.name,
-      email:data.email
->>>>>>> b3826e584e0c7a6951d1cfb1b331bd80abb072a0
     });
   }
 
@@ -55,15 +50,15 @@ export class UserService {
         status: 'active',
         user_id: id,
       },
-      attributes: ['id', 'totalPrice', 'quantity'],
+      attributes: ['totalPrice', 'quantity'],
       include: [
         {
           model: Meal,
-          attributes: ['id', 'name', 'price'],
+          attributes: ['name', 'price'],
           include: [
             {
               model: Restaurant,
-              attributes: ['id', 'name', 'rating'],
+              attributes: ['name', 'rating'],
             },
           ],
         },
@@ -75,19 +70,28 @@ export class UserService {
     });
   }
 
-  static async findOneOrderUser(id) {
-    return await Order.findOne({
-      where: {
-        id: id,
-        status: 'active',
-      },
+  static async findOneOrder(id) {
+    const order = await Order.findOne({
+      where: { id: id, status: 'active' },
       attributes: ['id', 'totalPrice', 'quantity'],
       include: [
         {
           model: User,
-          attributes: ['id', 'name', 'role'],
+          attributes: ['name', 'role'],
+        },
+        {
+          model: Meal,
+          attributes: ['name', 'price'],
+          include: [
+            {
+              model: Restaurant,
+              attributes: ['name', 'rating'],
+            },
+          ],
         },
       ],
     });
+
+    return order;
   }
 }

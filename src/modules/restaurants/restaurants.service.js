@@ -29,4 +29,6 @@ export class RestaurantService {
   static async delete(restaurant) {
     return await restaurant.update({ status: 'disable' });
   }
+
+  
 }

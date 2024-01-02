@@ -7,7 +7,7 @@ const reviewSchema = z.object({
     invalid_type_error: 'Comment must be a string',
     required_error: 'Comment is required',
   }),
-  restaurantId: z.number(),
+  //restaurantId: z.number(),
   rating: z
     .number()
     .min(0, { message: 'Rating min is 0' })
@@ -17,6 +17,22 @@ const reviewSchema = z.object({
 
 export function validateCreateReview(data) {
   const result = reviewSchema.safeParse(data);
+
+  const {
+    hasError,
+    errorMessages,
+    data: reviewData,
+  } = extractValidationData(result);
+
+  return {
+    hasError,
+    errorMessages,
+    reviewData,
+  };
+}
+
+export function validatePartialReview(data) {
+  const result = reviewSchema.partial().safeParse(data);
 
   const {
     hasError,

@@ -1,4 +1,3 @@
-import { INTEGER } from 'sequelize';
 import { AppError } from '../../common/errors/appError.js';
 import { catchAsync } from '../../common/errors/catchAsync.js';
 import {
@@ -93,13 +92,7 @@ export const findAllUser = catchAsync(async (req, res, next) => {
 export const findOneUser = catchAsync(async (req, res, next) => {
   const { user } = req;
 
-  return res.status(200).json({
-    id: user.id,
-    name: user.name,
-    surname: user.surname,
-    email: user.email,
-    role: user.role,
-  });
+  return res.status(200).json(user);
 });
 
 export const updateUser = catchAsync(async (req, res, next) => {
@@ -116,14 +109,14 @@ export const updateUser = catchAsync(async (req, res, next) => {
   await UserService.update(user, userData);
 
   return res.status(200).json({
-    message: 'the user has been updated successfully!',
+    message: 'the user has been updated successfully! 	୧(▲ᴗ▲)ノ',
   });
 });
 
 export const deleteUser = catchAsync(async (req, res, next) => {
   const { user } = req;
 
-  await UserService.delete(user);
+  if (!user) await UserService.delete(user);
 
   return res.status(204).json(null);
 });
@@ -137,7 +130,7 @@ export const changePassword = catchAsync(async (req, res, next) => {
 
   //3. validar si la contraseña actual y la nueva son iguales, enviar un error;
   if (currentPassword === newPassword) {
-    return next(new AppError('The password cannot be equal', 400));
+    return next(new AppError('The password cannot be equal ᕦ(⩾﹏⩽)ᕥ', 400));
   }
 
   //4. validar si la contraseña actual es igual a la contraseña en base de datos
@@ -166,14 +159,16 @@ export const changePassword = catchAsync(async (req, res, next) => {
 
 export const findAllOrdersUser = catchAsync(async (req, res, next) => {
   const { sessionUser } = req;
+
   const allOrders = await UserService.findAllOrders(sessionUser.dataValues.id);
+
   return res.status(202).json(allOrders);
 });
 
-export const findOneOrderUser = catchAsync(async (id, req, res, next) => {
-  const { sessionUser } = req;
+export const findOneOrderUser = catchAsync(async (req, res, next) => {
+  const { user } = req;
 
-  await UserService.findOneOrderUser(id);
+  const order = await UserService.findOneOrder(orderId);
 
-  return res.status(204).json({ message: `order` });
+  return res.status(202).json(order);
 });

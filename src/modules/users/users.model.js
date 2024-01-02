@@ -1,10 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../../config/database/database.js';
 import { encryptedPassword } from '../../config/plugins/encripted-password.plugin.js';
-<<<<<<< HEAD
-=======
-
->>>>>>> b3826e584e0c7a6951d1cfb1b331bd80abb072a0
 
 const User = sequelize.define(
   'users',

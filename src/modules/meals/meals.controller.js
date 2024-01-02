@@ -44,7 +44,7 @@ export const updateMeal = catchAsync(async (req, res, next) => {
   await MealService.update(meal, mealsData);
 
   return res.status(200).json({
-    message: 'the meal has been updated',
+    message: 'The meal has been updated ( name and/or price ) ✌(-‿-)✌',
   });
 });
 
@@ -53,5 +53,7 @@ export const deleteMeal = catchAsync(async (req, res, next) => {
 
   await MealService.delete(meal);
 
-  return res.status(204).json(null);
+  return res.status(204).json({
+    message: `status ${meal.name} is ***disable***`,
+  });
 });

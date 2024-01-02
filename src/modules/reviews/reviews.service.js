@@ -18,15 +18,35 @@ export class ReviewService {
     });
   }
 
-  static async create(data) {
-    return await Review.create(data);
+  static async create(reviewData) {
+    return await Review.create(reviewData);
   }
 
-  static async update(data) {
-    return await Review.update(data);
+  static async update(userId, restaurantId, reviewId, review, data) {
+    return await review.update(
+      {
+        comment: data.comment,
+        rating: data.rating,
+      },
+      {
+        where: {
+          id: reviewId,
+          userId: userId,
+          restaurantId: restaurantId,
+        },
+      }
+    );
   }
 
-  static async delete(review) {
-    return await review.update({ status: 'disable' });
+  static async delete(restaurantId, reviewId) {
+    return await Review.update(
+      { status: 'disabled' },
+      {
+        where: {
+          id: reviewId,
+          restaurant_id: restaurantId,
+        },
+      }
+    );
   }
 }

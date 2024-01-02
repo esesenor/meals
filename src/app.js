@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/v1', router);
 
 app.all('*', (req, res, next) => {
-  return next(new AppError(`${req.originalUrl} not found`, 404));
+  return next(new AppError(`${req.originalUrl} not found (=____=)`, 404));
 });
 
 app.use(globalErrorHandler);

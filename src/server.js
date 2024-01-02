@@ -16,5 +16,5 @@ async function main() {
 main();
 
 app.listen(envs.PORT, () => {
-  console.log(`Server running on port: ${envs.PORT} ┌( ͝° ͜ʖ͡°)=ε/̵͇̿̿/’̿’̿ ̿ 	(̿▀̿ ̿Ĺ̯̿̿▀̿ ̿)̄`);
+  console.log(`Server running on port: ${envs.PORT} (╯°□°)╯`);
 });
