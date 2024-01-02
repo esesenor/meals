@@ -36,13 +36,14 @@ export class ReviewService {
       });
   }
 
-  static async delete(restaurantId,reviewId) {
+  static async delete(restaurantId, reviewId) {
     return await Review.update({ status: "disabled" },
-    {
-      where: {
-        id: reviewId,
-        restaurant_id: restaurantId
-      }
-    });
+      {
+        where: {
+          id: reviewId,
+          restaurantId: restaurantId,
+          status: 'available'
+        }
+      });
   }
 }

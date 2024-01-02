@@ -3,9 +3,9 @@ import { catchAsync } from '../../common/errors/catchAsync.js';
 import { RestaurantService } from './restaurants.service.js';
 
 export const validExistRestaurant = catchAsync(async (req, res, next) => {
-  const { id } = req.params;
+  const { restaurantId } = req.params;
 
-  const restaurant = await RestaurantService.findOne(id);
+  const restaurant = await RestaurantService.findOne(restaurantId);
 
   if (!restaurant) {
     return next(new AppError('restaurant not found', 404));
