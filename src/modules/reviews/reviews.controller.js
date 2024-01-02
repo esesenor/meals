@@ -1,6 +1,6 @@
 import { catchAsync } from '../../common/errors/catchAsync.js';
 import { AppError } from '../../common/errors/appError.js';
-import { validateCreateReview } from '../reviews/reviews.schema.js';
+import { validateCreateReview, validatePartialReview } from '../reviews/reviews.schema.js';
 import { RestaurantService } from '../restaurants/restaurants.service.js';
 import { UserService } from '../users/users.service.js';
 import { ReviewService } from '../reviews/reviews.service.js';
@@ -89,18 +89,25 @@ export const updateReview = catchAsync(async (req, res, next) => {
 });
 
 export const deleteReview = catchAsync(async (req, res, next) => {
-  const { restaurantId, reviewId } = req.params;
-  const [restaurant, review] = await Promise.all([
-    await RestaurantService.findOne(restaurantId),
-    await UserService.findOne(reviewId),
-  ]);
+  const { restaurantId, reviewId } = req.params
+  const reviewDeleted = await ReviewService.findOne(reviewId)
+  const restaurantDeleted = await RestaurantService.findOne(restaurantId)
+  if (!restaurantDeleted) {
+    return next(new AppError(`Restaurant with id: ${restaurantId} not found`, 404)
+    );
+  }
+  if (!reviewDeleted) {
+    return next(new AppError(`Review with id: ${reviewId} not found`, 404)
+    );
+  };
+  const authorizationHeader = req.headers.authorization; //ver si esta el token autorizado
+  const token = authorizationHeader.split(' ')[1]; //extraemos solo el token
+  const decodedToken = jwt.verify(token, envs.SECRET_JWT_SEED);
+  const userId = decodedToken.id; //sacamos el id del usuario del token decodeficado
 
-  if (!restaurant) {
-    return next(new AppError("no existe el restaurante", 404))
-  }
-  if (!review) {
-    return next(new AppError("no existe el review", 404))
-  }
-  await ReviewService.delete(restaurantId, reviewId);
-  return res.status(204).json("correct delete");
+  await ReviewService.delete(userId, restaurantId, reviewId, reviewDeleted);
+  return res.status(200).json({
+    message: 'Review deleted',
+  });
+
 });

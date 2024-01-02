@@ -36,11 +36,12 @@ export class ReviewService {
       });
   }
 
-  static async delete(restaurantId, reviewId) {
-    return await Review.update({ status: "disabled" },
+  static async delete(userId, restaurantId, reviewId, reviewDeleted) {
+    return await reviewDeleted.update({ status: "disabled" },
       {
         where: {
           id: reviewId,
+          userId: userId,
           restaurantId: restaurantId,
           status: 'available'
         }
