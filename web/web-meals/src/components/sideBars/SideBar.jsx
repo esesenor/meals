@@ -11,12 +11,13 @@ const SideBar = () => {
     <>
       <div
         className={`xl:h-[100vh] overflow-y-scroll text-white fixed xl:static w-[60%] md:w-[40%] lg:w-[30%] xl:w-auto h-full top-0 
-        bg-yellow-600 p-4 flex flex-col justify-between z-50 ${
+        bg-gradient-to-tr from-red-200 via-amber-200 to-stone-300
+        p-4 flex flex-col justify-between z-50 ${
           showMenu ? 'left-0' : '-left-full'
         } transition-all`}
       >
         <div>
-          <h1 className="text-center text-2xl font-bold text-white mb-10">
+          <h1 className="text-center text-2xl font-bold text-black mb-10">
             Menu<span className="text-black text-3xl"></span>
           </h1>
           <MenuSidebar></MenuSidebar>

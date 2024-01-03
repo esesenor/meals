@@ -1,3 +1,53 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+::-webkit-scrollbar {
+  width: 10px; /* Ancho de la barra de desplazamiento */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #41710f; /* Color del deslizador de la barra de desplazamiento */
+  border-radius: 5px; /* Bordes redondeados para el deslizador */
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: #f0f9ff; /* Color de fondo claro */
+}
+
+.waves {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.wave {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.wave path {
+  stroke: #ff0000; /* Color de la ola (rojo) */
+}
+
+.wave-1 path,
+.wave-2 path,
+.wave-3 path,
+.wave-4 path,
+.wave-5 path {
+  animation: wave-animation 8s infinite linear;
+}
+
+@keyframes wave-animation {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}

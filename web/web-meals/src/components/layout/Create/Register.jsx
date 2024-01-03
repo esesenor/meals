@@ -13,7 +13,7 @@ const Register = () => {
 
   return (
     <div>
-      <div className="bg-zinc-700 p-8 text-white rounded-xl shadow-2xl w-auto lg:w-[450px] mx-auto max-w-[500px]">
+      <div className="bg-black p-8 text-white rounded-xl shadow-2xl w-auto lg:w-[450px] mx-auto max-w-[500px]">
         <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] mb-2">
           Crear <span className="text-primary">cuenta</span>
         </h1>
