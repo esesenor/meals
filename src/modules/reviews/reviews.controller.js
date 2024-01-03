@@ -75,6 +75,13 @@ export const updateReview = catchAsync(async (req, res, next) => {
     req.body
   );
 
+  if (hasError) {
+    return res.status(422).json({
+      status: 'error',
+      message: errorMessages,
+    });
+  }
+
   if (!restaurantUpdated) {
     return next(
       new AppError(
