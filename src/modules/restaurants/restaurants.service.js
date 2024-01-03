@@ -33,5 +33,5 @@ export class RestaurantService {
     return await restaurant.update({ status: 'disabled' });
   }
 
-  
+
 }

@@ -1,15 +1,20 @@
-import { useState } from 'react';
-import './App.css';
-import HeaderMeals from './components/layout/HeaderMeals';
+import './App.css'
+import HeaderMeal from './components/layout/HeaderMeals'
+import Register from './components/layout/Create/Register'
+import SideBar from './components/sideBars/SideBar'
 
 function App() {
-  const [count, setCount] = useState(0);
+  //const [count, setCount] = useState(0)
 
   return (
-    <main>
-      <HeaderMeals />
+    <main className="min-h-screen grid grid-cols-1 xl:grid-cols-5">
+      <SideBar/>
+      <div className="xl:col-span-4">
+        <HeaderMeal/>
+      </div>
+      <Register/>
     </main>
-  );
+  )
 }
 
 export default App;
