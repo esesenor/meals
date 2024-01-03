@@ -1,24 +1,25 @@
-import axios from 'axios'
+import axios from 'axios';
 const Register = () => {
-
-  const onSubmitUser = (e)=>{
+  const onSubmitUser = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-    console.log("data1111", data)
-    axios.post('http://localhost:3000/api/v1/users/register', data).then(()=>console.log("registro con exito")).catch((err)=>console.log(err))
-  }
+    console.log('data1111', data);
+    axios
+      .post('http://localhost:3000/api/v1/users/register', data)
+      .then(() => console.log('registro con exito'))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div>
-      <div className="bg-orange-950 p-8 text-white rounded-xl shadow-2xl w-auto lg:w-[450px] mx-auto max-w-[500px]">
+      <div className="bg-zinc-700 p-8 text-white rounded-xl shadow-2xl w-auto lg:w-[450px] mx-auto max-w-[500px]">
         <h1 className="text-3xl text-center uppercase font-bold tracking-[5px] mb-2">
           Crear <span className="text-primary">cuenta</span>
         </h1>
         {/* {message && <div className="message">{message}</div>} */}
-        <button className="flex items-center justify-center py-3 px-4 gap-4 bg-secondary-400 w-full rounded-full mb-4 text-green-400">
-        </button>
-        <form onSubmit={onSubmitUser}> 
+        <button className="flex items-center justify-center py-3 px-4 gap-4 bg-secondary-400 w-full rounded-full mb-4 text-green-400"></button>
+        <form onSubmit={onSubmitUser}>
           <div className="relative mb-4">
             <label htmlFor="name">Nombre Completo:</label>
             <input
@@ -55,7 +56,7 @@ const Register = () => {
             </label>
             <input
               className="py-1 pl-8 pr-4 bg-secondary-900 text-secondary-400 w-full outline-none rounded-lg"
-             // type={showPassword ? "text" : "password"}
+              // type={showPassword ? "text" : "password"}
               id="password"
               name="password"
               placeholder="Ingresa tu contraseña"
@@ -94,8 +95,6 @@ const Register = () => {
             />
           </div>
 
-          
-
           <input
             type="submit"
             value="Resgistrarse"
@@ -104,6 +103,6 @@ const Register = () => {
         </form>
       </div>
     </div>
-  )
-}
-export default Register
+  );
+};
+export default Register;
