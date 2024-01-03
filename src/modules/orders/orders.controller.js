@@ -1,41 +1,20 @@
 import { catchAsync } from '../../common/errors/catchAsync.js';
 import { AppError } from './../../common/errors/appError.js';
-import { validateCreateOrder } from './orders.schema.js';
+import Order from './orders.model.js';
 import { OrderService } from './orders.service.js';
 
 export const findAllOrders = catchAsync(async (req, res) => {
-  const order = await OrderService.findAll();
+  const order = await OrderService.findAllActive();
 
   return res.status(200).json(order);
 });
 
-export const createOrder = catchAsync(async (req, res) => {
-  const { hasError, errorMessages, orderData } = validateCreateOrder(req.body);
+export const createOrder = catchAsync(async (req, res) => {});
 
-  if (hasError) {
-    return res.status(422).json({
-      status: 'error',
-      message: errorMessages,
-    });
-  }
+export const findOneOrder = catchAsync(async (req, res, next) => {
+  const { review } = req;
 
-  const order = await OrderService.create(orderData);
-
-  return res.status(201).json(order);
-});
-
-export const findOneOrder = catchAsync(async (req, res) => {
-  const { order } = req;
-
-  return res.status(200).json(order);
-});
-
-export const updateOrder = catchAsync(async (req, res) => {
-  const { order } = req;
-
-  const orderUpdated = await OrderService.update(order);
-
-  return res.status(200).json(orderUpdated);
+  return res.status(200).json(review);
 });
 
 export const deleteOrder = catchAsync(async (req, res) => {
@@ -43,5 +22,17 @@ export const deleteOrder = catchAsync(async (req, res) => {
 
   await OrderService.delete(order);
 
-  return res.status(204).json(null);
+  return res.status(204).json({
+    message: 'Disable Order ⊹╰(⌣ʟ⌣)╯⊹',
+  });
+});
+
+export const updateOrder = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const order = Order.findOne(id);
+  await order.update();
+
+  return res.status(204).json({
+    message: 'Cancelled Order ⊹╰(⌣ʟ⌣)╯⊹',
+  });
 });

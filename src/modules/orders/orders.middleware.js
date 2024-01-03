@@ -8,7 +8,7 @@ export const validExistOrder = catchAsync(async (req, res, next) => {
   const order = await OrderService.findOne(id);
 
   if (!order) {
-    return next(new AppError('order not found', 404));
+    return next(new AppError('Order not found', 404));
   }
 
   req.order = order;

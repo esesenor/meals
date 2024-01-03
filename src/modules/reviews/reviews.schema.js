@@ -2,7 +2,6 @@ import z from 'zod';
 import { extractValidationData } from './../../common/utils/extractErrorData.js';
 
 const reviewSchema = z.object({
-  userId: z.number(),
   comment: z.string({
     invalid_type_error: 'Comment must be a string',
     required_error: 'Comment is required',

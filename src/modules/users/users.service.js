@@ -27,12 +27,19 @@ export class UserService {
   static async update(user, data) {
     return await user.update({
       name: data.name,
-      email: data.email
+      email: data.email,
     });
   }
 
-  static async delete(user) {
-    return await user.update({ status: 'disabled' });
+  static async delete(id) {
+    return await User.update(
+      { status: 'disabled' },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
   }
 
   static async findOneByEmail(email) {
@@ -87,7 +94,5 @@ export class UserService {
         },
       ],
     });
-
-    return order;
   }
 }

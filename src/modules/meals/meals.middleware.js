@@ -8,7 +8,7 @@ export const validExistMeal = catchAsync(async (req, res, next) => {
   const meal = await MealService.findOne(id);
 
   if (!meal) {
-    return next(new AppError('order not found', 404));
+    return next(new AppError('Meal not found', 404));
   }
 
   req.meal = meal;

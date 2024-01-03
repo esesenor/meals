@@ -8,7 +8,7 @@ const restaurantSchema = z.object({
   }),
   address: z.string({
     invalid_type_error: 'name must be a string',
-    required_error: 'adress is required',
+    required_error: 'Adress is required',
   }),
   rating: z
     .number()

@@ -1,4 +1,3 @@
-import { INTEGER } from 'sequelize';
 import { AppError } from '../../common/errors/appError.js';
 import { catchAsync } from '../../common/errors/catchAsync.js';
 import {
@@ -14,10 +13,12 @@ import {
 import { UserService } from './users.service.js';
 import jwt from 'jsonwebtoken';
 import { envs } from '../../config/enviroments/enviroments.js';
+import User from './users.model.js';
+import Order from '../orders/orders.model.js';
 
 export const register = catchAsync(async (req, res, next) => {
   const { hasError, errorMessages, userData } = validateUser(req.body);
-   console.log("Esto es la req:\n",req.params)
+  console.log('Esto es la req:\n', req.params);
   if (hasError) {
     return res.status(422).json({
       status: 'error',
@@ -106,7 +107,7 @@ export const findOneUser = catchAsync(async (req, res, next) => {
 
 export const updateUser = catchAsync(async (req, res, next) => {
   const { user } = req;
-  console.log("soy user req: ", req)
+
   const { hasError, errorMessages, userData } = validatePartialUser(req.body);
 
   if (hasError) {
@@ -119,16 +120,8 @@ export const updateUser = catchAsync(async (req, res, next) => {
   await UserService.update(user, userData);
 
   return res.status(200).json({
-    message: 'the user has been updated successfully! 	୧(▲ᴗ▲)ノ',
+    message: 'User has been updated successfully! 	୧(▲ᴗ▲)ノ',
   });
-});
-
-export const deleteUser = catchAsync(async (req, res, next) => {
-  const { user } = req;
-
-  if (!user) await UserService.delete(user);
-
-  return res.status(204).json(null);
 });
 
 export const changePassword = catchAsync(async (req, res, next) => {
@@ -168,15 +161,31 @@ export const changePassword = catchAsync(async (req, res, next) => {
 });
 
 export const findAllOrdersUser = catchAsync(async (req, res, next) => {
-  const { sessionUser } = req;
-  const allOrders = await UserService.findAllOrders(sessionUser.dataValues.id);
+  const authorizationHeader = req.headers.authorization; //ver si esta el token autorizado
+  const token = authorizationHeader.split(' ')[1]; //extraemos solo el token
+  const decodedToken = jwt.verify(token, envs.SECRET_JWT_SEED);
+  const userId = decodedToken.id; //sacamos el id del usuario del tok
+  const allOrders = await UserService.findAllOrders(userId);
   return res.status(202).json(allOrders);
 });
 
-export const findOneOrderUser = catchAsync(async (id, req, res, next) => {
-  const { sessionUser } = req;
+export const findOneOrderUser = catchAsync(async (req, res, next) => {
+  const authorizationHeader = req.headers.authorization; //ver si esta el token autorizado
+  const token = authorizationHeader.split(' ')[1]; //extraemos solo el token
+  const decodedToken = jwt.verify(token, envs.SECRET_JWT_SEED);
+  const userId = decodedToken.id; //sacamos el id del usuario del token decodeficado
+  const { id } = req.params;
+  const idOrder = id;
+  const orderDetail = await UserService.findOneOrderUser(userId, idOrder);
+  return res.status(202).json(orderDetail);
+});
 
-  await UserService.findOneOrderUser(id);
+export const deleteUser = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
 
-  return res.status(204).json({ message: `order` });
+  await UserService.delete(id);
+
+  return res.status(204).json({
+    message: 'User has been DISABLE successfully! 	୧(▲ᴗ▲)ノ',
+  });
 });

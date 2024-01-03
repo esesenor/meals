@@ -22,7 +22,7 @@ export class RestaurantService {
     return await Restaurant.create(data);
   }
 
-  static async update(restaurant,data) {
+  static async update(restaurant, data) {
     return await restaurant.update({
       name: data.name,
       address: data.address

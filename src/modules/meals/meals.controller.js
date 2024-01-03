@@ -54,6 +54,6 @@ export const deleteMeal = catchAsync(async (req, res, next) => {
   await MealService.delete(meal);
 
   return res.status(204).json({
-    message: `status ${meal.name} is ***disable***`,
+    message: 'status  is ***disable***',
   });
 });
